@@ -20,7 +20,10 @@ function is_logged_in() {
  */
 function require_login() {
     if (!is_logged_in()) {
-        $login_path = file_exists("login.php") ? "login.php" : "../login.php";
+        $root_dir    = realpath(__DIR__ . '/..');
+        $current_dir = isset($_SERVER['SCRIPT_FILENAME']) ? realpath(dirname($_SERVER['SCRIPT_FILENAME'])) : '';
+        $is_subdir   = ($current_dir && strcasecmp($root_dir, $current_dir) !== 0);
+        $login_path  = $is_subdir ? "../login.php" : "login.php";
         header("Location: " . $login_path);
         exit();
     }
@@ -32,11 +35,15 @@ function require_login() {
 function require_admin() {
     require_login();
     if (empty($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
-        $dashboard_path = file_exists("dashboard.php") ? "dashboard.php" : "../dashboard.php";
+        $root_dir       = realpath(__DIR__ . '/..');
+        $current_dir    = isset($_SERVER['SCRIPT_FILENAME']) ? realpath(dirname($_SERVER['SCRIPT_FILENAME'])) : '';
+        $is_subdir      = ($current_dir && strcasecmp($root_dir, $current_dir) !== 0);
+        $dashboard_path = $is_subdir ? "../dashboard.php" : "dashboard.php";
         header("Location: " . $dashboard_path);
         exit("Access Denied: Administrator role required.");
     }
 }
+
 
 /**
  * Get the currently logged-in user data from session.

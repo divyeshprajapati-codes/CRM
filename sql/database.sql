@@ -4,9 +4,15 @@
 -- Default Database: industrial_crm
 -- Charset: utf8mb4 / utf8mb4_unicode_ci
 -- ==========================================================
+-- NOTE FOR SHARED HOSTING (cPanel / phpMyAdmin):
+-- 1. Create your database in your hosting control panel.
+-- 2. Click on that database name in phpMyAdmin.
+-- 3. Go to the "Import" tab and select this file.
+-- ==========================================================
 
-CREATE DATABASE IF NOT EXISTS `industrial_crm` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `industrial_crm`;
+-- CREATE DATABASE IF NOT EXISTS `industrial_crm` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE `industrial_crm`;
+
 
 -- --------------------------------------------------------
 -- Table structure for table `users`

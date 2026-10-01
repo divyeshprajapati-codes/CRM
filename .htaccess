@@ -1,0 +1,18 @@
+# ==========================================================
+# Industrial CRM Apache Configuration (.htaccess)
+# ==========================================================
+
+# 1. Disable Directory Browsing (Prevents directory listing)
+Options -Indexes
+
+# 2. Set Default Directory Index (Opens index.php -> login.php)
+DirectoryIndex index.php login.php
+
+# 3. Protect sensitive files from direct web access
+<FilesMatch "^\.|\.(sql|env|bak|log|ini|sh)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 4. Set standard UTF-8 charset
+AddDefaultCharset UTF-8

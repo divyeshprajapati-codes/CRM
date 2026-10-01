@@ -1,5 +1,5 @@
 <?php
-require_once("../db.php");
+require_once __DIR__ . '/../db.php';
 require_login();
 
 $error = "";
@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
 </head>
 <body>
 
-<?php include("../sidebar.php"); ?>
+<?php include __DIR__ . '/../sidebar.php'; ?>
+
 
 <div class="main">
     <div class="box">

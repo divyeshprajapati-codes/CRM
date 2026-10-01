@@ -1,6 +1,7 @@
 <?php
-require_once("../db.php");
+require_once __DIR__ . '/../db.php';
 require_login();
+
 
 // Set headers for CSV download
 header('Content-Type: text/csv; charset=utf-8');

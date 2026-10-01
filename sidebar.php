@@ -3,9 +3,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$is_subdir = file_exists("../db.php") || file_exists("../dashboard.php");
+$root_dir    = realpath(__DIR__);
+$current_dir = isset($_SERVER['SCRIPT_FILENAME']) ? realpath(dirname($_SERVER['SCRIPT_FILENAME'])) : '';
+$is_subdir   = ($current_dir && strcasecmp($root_dir, $current_dir) !== 0);
 $path_prefix = $is_subdir ? "../" : "";
-$user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$user_role   = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+
+
 ?>
 
 <div class="sidebar">

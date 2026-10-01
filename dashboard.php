@@ -1,14 +1,27 @@
 <?php
-require_once("db.php");
+require_once __DIR__ . '/db.php';
 require_login();
 
-// Fetch summary metrics using PDO
-$totalCustomers  = (int)$pdo->query("SELECT COUNT(*) FROM customers")->fetchColumn();
-$totalProducts   = (int)$pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
-$totalQuotations = (int)$pdo->query("SELECT COUNT(*) FROM quotations")->fetchColumn();
-$totalOrders     = (int)$pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
-$totalInvoices   = (int)$pdo->query("SELECT COUNT(*) FROM invoices")->fetchColumn();
-$totalRevenue    = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM invoices")->fetchColumn();
+// Fetch summary metrics safely using PDO with try-catch
+$totalCustomers  = 0;
+$totalProducts   = 0;
+$totalQuotations = 0;
+$totalOrders     = 0;
+$totalInvoices   = 0;
+$totalRevenue    = 0.0;
+$db_error        = "";
+
+try {
+    $totalCustomers  = (int)$pdo->query("SELECT COUNT(*) FROM customers")->fetchColumn();
+    $totalProducts   = (int)$pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
+    $totalQuotations = (int)$pdo->query("SELECT COUNT(*) FROM quotations")->fetchColumn();
+    $totalOrders     = (int)$pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
+    $totalInvoices   = (int)$pdo->query("SELECT COUNT(*) FROM invoices")->fetchColumn();
+    $totalRevenue    = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM invoices")->fetchColumn();
+} catch (PDOException $e) {
+    error_log("Dashboard Metrics Error: " . $e->getMessage());
+    $db_error = "Database tables missing or incomplete. Please import <code>sql/database.sql</code> in phpMyAdmin.";
+}
 
 $displayName = (!empty($_SESSION['full_name'])) ? $_SESSION['full_name'] : (isset($_SESSION['username']) ? $_SESSION['username'] : '');
 $displayRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
@@ -24,7 +37,7 @@ $displayRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 </head>
 <body>
 
-<?php include("sidebar.php"); ?>
+<?php include __DIR__ . '/sidebar.php'; ?>
 
 <div class="main">
 
@@ -38,7 +51,14 @@ $displayRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
         </div>
     </div>
 
+    <?php if (!empty($db_error)): ?>
+        <div style="padding:15px; margin-top:20px; border-radius:8px; background:#ef4444; color:#fff; font-weight:bold;">
+            ⚠️ <?php echo $db_error; ?>
+        </div>
+    <?php endif; ?>
+
     <?php display_flash_message(); ?>
+
 
     <div class="cards">
         <div class="card">

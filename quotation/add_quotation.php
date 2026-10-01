@@ -1,5 +1,5 @@
 <?php
-require_once("../db.php");
+require_once __DIR__ . '/../db.php';
 require_login();
 
 $error = "";
@@ -49,7 +49,8 @@ $selectedProduct  = isset($_POST['product']) ? $_POST['product'] : '';
 </head>
 <body>
 
-<?php include("../sidebar.php"); ?>
+<?php include __DIR__ . '/../sidebar.php'; ?>
+
 
 <div class="main">
     <div class="box">

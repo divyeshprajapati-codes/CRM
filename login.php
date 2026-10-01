@@ -1,5 +1,6 @@
 <?php
-require_once("db.php");
+require_once __DIR__ . '/db.php';
+
 
 // If already logged in, redirect to dashboard
 if (is_logged_in()) {

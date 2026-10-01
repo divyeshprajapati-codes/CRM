@@ -1,5 +1,5 @@
 <?php
-require_once("../db.php");
+require_once __DIR__ . '/../db.php';
 require_admin();
 
 $stmt = $pdo->query("SELECT * FROM users ORDER BY id DESC");
@@ -16,7 +16,8 @@ $current_user_id = isset($_SESSION['id']) ? (int)$_SESSION['id'] : 0;
 </head>
 <body>
 
-<?php include("../sidebar.php"); ?>
+<?php include __DIR__ . '/../sidebar.php'; ?>
+
 
 <div class="main">
     <div class="box">
