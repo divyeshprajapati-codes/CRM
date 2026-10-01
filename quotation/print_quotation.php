@@ -19,6 +19,7 @@ if (!$row) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quotation <?php echo e($row['quotation_no']); ?></title>
     <style>
         @page {
@@ -36,6 +37,7 @@ if (!$row) {
 
         .page {
             width: 210mm;
+            max-width: 100%;
             min-height: 297mm;
             background: white;
             margin: auto;
@@ -43,6 +45,16 @@ if (!$row) {
             box-sizing: border-box;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: relative;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            .page {
+                padding: 15px 12px;
+                min-height: auto;
+            }
         }
 
         .header {

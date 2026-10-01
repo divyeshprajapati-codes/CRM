@@ -8,11 +8,16 @@ Options -Indexes
 # 2. Set Default Directory Index (Opens index.php -> login.php)
 DirectoryIndex index.php login.php
 
-# 3. Protect sensitive files from direct web access
+# 3. Ensure PHP files are executed by the server and not downloaded
+<IfModule mod_mime.c>
+    AddType application/x-httpd-php .php .phtml .php7 .php8
+</IfModule>
+
+# 4. Protect sensitive files from direct web access
 <FilesMatch "^\.|\.(sql|env|bak|log|ini|sh)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-# 4. Set standard UTF-8 charset
+# 5. Set standard UTF-8 charset
 AddDefaultCharset UTF-8

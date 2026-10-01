@@ -103,8 +103,8 @@ $displayRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 
     <div class="box">
         <h2>CRM Overview Chart</h2>
-        <div style="margin-top:20px; max-height:400px;">
-            <canvas id="myChart" height="90"></canvas>
+        <div style="margin-top:20px; position:relative; min-height:260px; max-height:380px;">
+            <canvas id="myChart"></canvas>
         </div>
     </div>
 
@@ -136,6 +136,7 @@ $displayRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
