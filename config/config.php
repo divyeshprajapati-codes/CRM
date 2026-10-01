@@ -5,16 +5,16 @@
  */
 
 // Application Info
-define('APP_NAME', 'Industrial CRM');
-define('APP_VERSION', '2.0.0');
+if (!defined('APP_NAME'))        define('APP_NAME', 'Industrial CRM');
+if (!defined('APP_VERSION'))     define('APP_VERSION', '2.0.0');
 
 // Company Details (Used on Print Quotation & Invoice)
-define('COMPANY_NAME', 'Accurate Hightensile Enterprise');
-define('COMPANY_TAGLINE', 'Industrial Fasteners & Components');
-define('COMPANY_ADDRESS', 'Ahmedabad, Gujarat, India');
-define('COMPANY_PHONE', '+91-XXXXXXXXXX');
-define('COMPANY_EMAIL', 'info@company.com');
-define('CURRENCY_SYMBOL', '₹');
+if (!defined('COMPANY_NAME'))    define('COMPANY_NAME', 'Accurate Hightensile Enterprise');
+if (!defined('COMPANY_TAGLINE')) define('COMPANY_TAGLINE', 'Industrial Fasteners & Components');
+if (!defined('COMPANY_ADDRESS')) define('COMPANY_ADDRESS', 'Ahmedabad, Gujarat, India');
+if (!defined('COMPANY_PHONE'))   define('COMPANY_PHONE', '+91-XXXXXXXXXX');
+if (!defined('COMPANY_EMAIL'))   define('COMPANY_EMAIL', 'info@company.com');
+if (!defined('CURRENCY_SYMBOL')) define('CURRENCY_SYMBOL', '₹');
 
 // Start secure session if not already started and headers not sent
 if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
