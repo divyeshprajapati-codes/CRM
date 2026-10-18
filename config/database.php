@@ -274,6 +274,10 @@ if (!$pdo && $sqlite_allowed && extension_loaded('pdo_sqlite')) {
             ");
         }
 
+        // Always guarantee Admin user exists with valid hash even in pre-existing /tmp files
+        $adminHash = '$2y$10$5W4is3aT3MGgsP.x.hBODODprEjKwD0od3Laz8zfZdP7Kb3W/oMFe';
+        $sqlite_pdo->prepare("INSERT OR REPLACE INTO users (id, full_name, username, password, role, status) VALUES (1, 'Administrator', 'admin', ?, 'Admin', 'Active')")->execute([$adminHash]);
+
         $pdo = $sqlite_pdo;
         $conn = $pdo;
         if (!defined('CRM_DEMO_MODE')) {

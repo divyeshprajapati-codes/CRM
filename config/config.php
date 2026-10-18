@@ -18,6 +18,14 @@ if (!defined('CURRENCY_SYMBOL')) define('CURRENCY_SYMBOL', '₹');
 
 // Start secure session if not already started and headers not sent
 if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+    $temp_session_dir = sys_get_temp_dir() . '/php_sessions';
+    if (!is_dir($temp_session_dir)) {
+        @mkdir($temp_session_dir, 0777, true);
+    }
+    if (is_dir($temp_session_dir) && is_writable($temp_session_dir)) {
+        session_save_path($temp_session_dir);
+    }
+
     ini_set('session.cookie_httponly', '1');
     ini_set('session.use_only_cookies', '1');
     
