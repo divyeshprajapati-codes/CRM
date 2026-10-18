@@ -7,22 +7,6 @@ if (is_logged_in()) {
     exit();
 }
 
-// Support instant 1-click admin login
-if (isset($_GET['quick_login']) && $_GET['quick_login'] === 'admin') {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE LOWER(username) = 'admin' LIMIT 1");
-    $stmt->execute();
-    $user = $stmt->fetch();
-    if ($user) {
-        session_regenerate_id(true);
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['full_name'] = $user['full_name'];
-        header("Location: dashboard.php");
-        exit();
-    }
-}
-
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
@@ -54,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             elseif (function_exists('password_verify') && password_verify($password, $user['password'])) {
                 $authenticated = true;
             } 
-            // 3. Fallback for legacy plain-text passwords
+            // 3. Fallback for plain-text password match
             elseif ($password === $user['password']) {
                 $authenticated = true;
             }
@@ -110,16 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         <?php endif; ?>
 
         <?php if (defined('CRM_DEMO_MODE') && CRM_DEMO_MODE): ?>
-            <div style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 14px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; text-align: left;">
-                <div style="font-weight: 600; display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="display: flex; align-items: center; gap: 6px;"><span>⚡</span> <span>Vercel Live Demo Mode</span></span>
-                    <a href="login.php?quick_login=admin" style="background: #2563eb; color: #fff; padding: 5px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; display: inline-block;">1-Click Login &rarr;</a>
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 14px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; text-align: left;">
+                <div style="font-weight: 600; display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                    <span>⚡</span> <span>Vercel Demo Mode</span>
                 </div>
                 <div>Default Login: <strong>admin</strong> / <strong>admin123</strong></div>
-                <div style="margin-top: 6px; display: flex; gap: 8px; align-items: center;">
-                    <button type="button" onclick="fillAdmin()" style="background: #dbeafe; border: 1px solid #93c5fd; color: #1e40af; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 4px 8px; cursor: pointer;">Fill Credentials</button>
-                    <a href="login.php?quick_login=admin" style="color: #2563eb; font-size: 11px; text-decoration: underline;">Direct 1-Click Login</a>
-                </div>
             </div>
         <?php endif; ?>
 
@@ -132,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     type="text"
                     id="username"
                     name="username"
-                    value="<?php echo e(isset($_POST['username']) ? $_POST['username'] : (defined('CRM_DEMO_MODE') && CRM_DEMO_MODE ? 'admin' : '')); ?>"
+                    value="<?php echo e(isset($_POST['username']) ? $_POST['username'] : ''); ?>"
                     placeholder="Enter Username"
                     required
                     autofocus>
@@ -144,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     type="password"
                     id="password"
                     name="password"
-                    value="<?php echo (defined('CRM_DEMO_MODE') && CRM_DEMO_MODE) ? 'admin123' : ''; ?>"
+                    value=""
                     placeholder="Enter Password"
                     required>
             </div>
@@ -175,13 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 function showPassword() {
     var x = document.getElementById("password");
     x.type = (x.type === "password") ? "text" : "password";
-}
-
-function fillAdmin() {
-    var u = document.getElementById("username");
-    var p = document.getElementById("password");
-    if (u) u.value = "admin";
-    if (p) p.value = "admin123";
 }
 </script>
 
