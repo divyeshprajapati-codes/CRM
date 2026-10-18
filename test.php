@@ -52,7 +52,12 @@ $users = $pdo->query("SELECT id, username, role, status, password FROM users")->
 foreach ($users as $u) {
     $isHashed = (strpos($u['password'], '$2y$') === 0 || strpos($u['password'], '$argon2') === 0);
     $hashStatus = $isHashed ? "Securely Hashed (OK)" : "Legacy Plaintext (Will auto-upgrade on login)";
+    $verifyAdmin123 = password_verify('admin123', $u['password']) ? "MATCH (OK)" : "MISMATCH (FAIL)";
     echo "   - User #{$u['id']} '{$u['username']}' [{$u['role']}, {$u['status']}]: {$hashStatus}\n";
+    echo "   - password_verify('admin123'): {$verifyAdmin123}\n";
+    if (!password_verify('admin123', $u['password'])) {
+        echo "   - Generated fresh hash for admin123: " . password_hash('admin123', PASSWORD_DEFAULT) . "\n";
+    }
 }
 
 echo "\n====================================================\n";
