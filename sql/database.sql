@@ -115,5 +115,5 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 -- Default Administrator Account (password: admin123)
 -- --------------------------------------------------------
 INSERT INTO `users` (`id`, `full_name`, `username`, `password`, `role`, `status`)
-VALUES (1, 'Administrator', 'admin', '$2y$10$eE618Ww1mK2L4GvWz2Z2y.Gq64gCslmS/O3BqVf2hY4e0Zf7aA28e', 'Admin', 'Active')
+VALUES (1, 'Administrator', 'admin', '$2y$10$5W4is3aT3MGgsP.x.hBODODprEjKwD0od3Laz8zfZdP7Kb3W/oMFe', 'Admin', 'Active')
 ON DUPLICATE KEY UPDATE `id`=`id`;

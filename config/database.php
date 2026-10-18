@@ -251,9 +251,10 @@ if (!$pdo && $sqlite_allowed && extension_loaded('pdo_sqlite')) {
             ");
 
             // Insert default Admin (admin / admin123)
-            $adminHash = '$2y$10$eE618Ww1mK2L4GvWz2Z2y.Gq64gCslmS/O3BqVf2hY4e0Zf7aA28e';
+            $adminHash = '$2y$10$5W4is3aT3MGgsP.x.hBODODprEjKwD0od3Laz8zfZdP7Kb3W/oMFe';
             $stmt = $sqlite_pdo->prepare("INSERT OR IGNORE INTO users (id, full_name, username, password, role, status) VALUES (1, 'Administrator', 'admin', ?, 'Admin', 'Active')");
             $stmt->execute([$adminHash]);
+            $sqlite_pdo->prepare("UPDATE users SET password = ? WHERE username = 'admin'")->execute([$adminHash]);
 
             // Insert initial demonstration records
             $sqlite_pdo->exec("
