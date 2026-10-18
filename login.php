@@ -83,6 +83,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             </div>
         <?php endif; ?>
 
+        <?php if (defined('CRM_DEMO_MODE') && CRM_DEMO_MODE): ?>
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 14px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; text-align: left;">
+                <div style="font-weight: 600; display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                    <span>⚡</span> <span>Vercel Live Demo Mode</span>
+                </div>
+                <div>Default Login: <strong>admin</strong> / <strong>admin123</strong></div>
+                <div style="color: #64748b; font-size: 11px; margin-top: 4px;">To connect persistent MySQL, add cloud database credentials in Vercel Settings.</div>
+            </div>
+        <?php endif; ?>
+
         <form method="POST" action="login.php">
             <?php echo csrf_field(); ?>
 

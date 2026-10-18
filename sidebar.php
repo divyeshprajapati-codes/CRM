@@ -50,6 +50,13 @@ function is_active_nav($pattern, $uri) {
         </div>
     </div>
 
+    <?php if (defined('CRM_DEMO_MODE') && CRM_DEMO_MODE): ?>
+    <div style="margin: 0 16px 14px 16px; padding: 8px 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; font-size: 11px; line-height: 1.4;">
+        <span style="color: #3b82f6; font-weight: 600;">⚡ Demo Storage</span>
+        <div style="color: var(--text-color, #64748b); font-size: 10px; margin-top: 2px;">Temporary SQLite. Connect Cloud MySQL for permanent data.</div>
+    </div>
+    <?php endif; ?>
+
     <div class="sidebar-links">
         <a href="<?php echo $path_prefix; ?>dashboard.php" class="<?php echo ($current_script === 'dashboard.php') ? 'active-nav' : ''; ?>">
             <span class="nav-icon">📊</span> Dashboard

@@ -25,6 +25,8 @@ try {
     echo "   - Connection: Successfully connected via PDO (OK)\n";
     $driverName = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
     $serverVersion = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+    $activeMode = defined('CRM_DEMO_MODE') && CRM_DEMO_MODE ? "Live Demo Mode (Temporary SQLite)" : "Persistent MySQL Connection";
+    echo "   - Mode: {$activeMode}\n";
     echo "   - Driver: {$driverName}\n";
     echo "   - Server Version: {$serverVersion}\n";
 } catch (Exception $e) {
