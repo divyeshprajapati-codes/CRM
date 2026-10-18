@@ -24,6 +24,7 @@ if (!function_exists('crm_get_env')) {
 // Custom PDO wrapper to ensure seamless SQLite compatibility (strips MySQL-specific FOR UPDATE when in demo mode)
 if (!class_exists('CrmPDO')) {
     class CrmPDO extends PDO {
+        #[\ReturnTypeWillChange]
         public function prepare($statement, $driver_options = array()) {
             if ($this->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
                 $statement = preg_replace('/\s+FOR\s+UPDATE\b/i', '', $statement);
